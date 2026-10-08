@@ -1,1 +1,222 @@
 
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DB-YatHtar-train | DB ရ ကောက် ရထားကြီး ပျော်ပျော်စီး</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes driveTrain {
+            0% { transform: translateX(-150px); }
+            100% { transform: translateX(calc(100vw + 150px)); }
+        }
+        .train-animation {
+            animation: driveTrain 8s linear infinite;
+        }
+        @keyframes blinkLight {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .signal-light {
+            animation: blinkLight 1.5s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-red-950 to-slate-900 text-slate-100 font-sans min-h-screen">
+ 
+    <!-- Header -->
+    <header class="bg-red-600/90 backdrop-blur-md text-white shadow-lg py-4 px-6 sticky top-0 z-50 border-b border-red-500/30">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-xl md:text-2xl font-black tracking-wider flex items-center gap-2">
+                    🚄 DB-YatHtar-train
+                </h1>
+                <p class="text-xs text-red-200 mt-0.5">DB ရ ကောက် ရထားကြီး ပျော်ပျော်စီး</p>
+            </div>
+            <span class="text-xs bg-red-800/80 text-red-100 px-3 py-1 rounded-full font-semibold border border-red-500/50">Live Station Experience</span>
+        </div>
+    </header>
+ 
+    <!-- Animated DB Station Banner -->
+    <div class="max-w-4xl mx-auto px-4 mt-6">
+        <div class="relative bg-slate-800/80 backdrop-blur-md rounded-2xl overflow-hidden h-36 border border-slate-700 shadow-2xl flex items-end">
+            <!-- Platform roof & lights -->
+            <div class="absolute top-2 left-6 right-6 flex justify-between text-xs text-slate-400">
+                <span>📍 Hauptbahnhof München</span>
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 signal-light inline-block"></span> On Time</span>
+            </div>
+            
+            <!-- Platform Floor -->
+            <div class="absolute bottom-0 left-0 right-0 h-4 bg-slate-900 border-t border-slate-700"></div>
+            
+            <!-- Waiting Passengers (SVG silhouettes) -->
+            <div class="absolute bottom-4 left-10 flex space-x-3 text-slate-400 z-10">
+                <!-- Passenger 1 -->
+                <svg class="w-6 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 2a3 3 0 1 0 3 3 3 3 0 0 0-3-3m0 7c-2.67 0-8 1.34-8 4v3h2v7h3v-6h2v6h3v-7h2v-3c0-2.66-5.33-4-8-4Z"/></svg>
+                <!-- Passenger 2 (with luggage) -->
+                <svg class="w-6 h-8 fill-current opacity-80" viewBox="0 0 24 24"><path d="M12 2a3 3 0 1 0 3 3 3 3 0 0 0-3-3m0 7c-2.67 0-8 1.34-8 4v3h2v7h3v-6h2v6h3v-7h2v-3c0-2.66-5.33-4-8-4Z"/></svg>
+                <!-- Passenger 3 -->
+                <svg class="w-5 h-7 fill-current opacity-70" viewBox="0 0 24 24"><path d="M12 2a3 3 0 1 0 3 3 3 3 0 0 0-3-3m0 7c-2.67 0-8 1.34-8 4v3h2v7h3v-6h2v6h3v-7h2v-3c0-2.66-5.33-4-8-4Z"/></svg>
+            </div>
+ 
+            <!-- Moving DB ICE Train -->
+            <div class="absolute bottom-4 train-animation flex items-center z-20">
+                <div class="bg-red-600 text-white px-4 py-2 rounded-l-full font-black text-sm flex items-center shadow-lg border-y border-l border-red-400">
+                    ICE 🔴 DB
+                </div>
+                <div class="bg-slate-200 text-slate-800 px-6 py-2 font-bold text-xs tracking-widest border-y border-slate-400">
+                    WAGEN 3
+                </div>
+                <div class="bg-slate-300 text-slate-800 px-6 py-2 rounded-r-full font-bold text-xs tracking-widest border-y border-r border-slate-400">
+                    WAGEN 4
+                </div>
+            </div>
+            
+            <!-- Track Line -->
+            <div class="absolute bottom-4 left-0 right-0 h-1 bg-red-500/50"></div>
+        </div>
+    </div>
+ 
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 py-6">
+        <div class="bg-slate-800/90 backdrop-blur-md rounded-2xl shadow-xl p-6 mb-8 border border-slate-700">
+            <h2 class="text-lg font-semibold mb-4 text-red-400 flex items-center gap-2">
+                🎯 ခရီးစဉ် ရှာဖွေရန် (Search Connections)
+            </h2>
+            
+            <form id="searchForm" class="space-y-4">
+                <!-- From & To Dropdowns -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">မှ (From City)</label>
+                        <select id="fromStation" class="w-full border border-slate-600 rounded-xl p-3 bg-slate-900 text-slate-100 focus:ring-2 focus:ring-red-500 outline-none" required>
+                            <option value="">မြို့ရွေးပါ...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">သို့ (To City)</label>
+                        <select id="toStation" class="w-full border border-slate-600 rounded-xl p-3 bg-slate-900 text-slate-100 focus:ring-2 focus:ring-red-500 outline-none" required>
+                            <option value="">မြို့ရွေးပါ...</option>
+                        </select>
+                    </div>
+                </div>
+ 
+                <!-- Train Type Dropdown -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">ရထားအမျိုးအစား (Train Type)</label>
+                    <select id="trainType" class="w-full border border-slate-600 rounded-xl p-3 bg-slate-900 text-slate-100 outline-none focus:ring-2 focus:ring-red-500">
+                        <option value="All">All (အားလုံး)</option>
+                        <option value="D-ticket only">D-ticket only (Deutschlandticket သီးသန့်)</option>
+                        <option value="Express only">Express only (ICE / IC အမြန်ရထားများ)</option>
+                    </select>
+                </div>
+ 
+                <!-- Direct Only Checkbox -->
+                <div class="flex items-center space-x-3 pt-2">
+                    <input type="checkbox" id="directOnly" class="w-5 h-5 text-red-600 rounded border-slate-600 bg-slate-900 focus:ring-red-500">
+                    <label for="directOnly" class="text-sm text-slate-300 cursor-pointer font-medium">Direct trains only (တိုက်ရိုက်ရထားများသာ)</label>
+                </div>
+ 
+                <!-- Search Button -->
+                <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-bold py-3.5 rounded-xl transition duration-200 shadow-lg shadow-red-900/30">
+                    🔍 အသက်သာဆုံး ရထားရှာမည် (Find Best Price)
+                </button>
+            </form>
+        </div>
+ 
+        <!-- Result Section -->
+        <div id="resultSection" class="hidden space-y-4">
+            <h3 class="text-xl font-bold text-slate-200">ရလဒ်များ (Best Price Results)</h3>
+            <div id="resultList" class="space-y-3"></div>
+        </div>
+    </main>
+ 
+    <script>
+        const API_BASE = 'https://your-koyeb-app-name.koyeb.app/api';
+ 
+        async function loadStations() {
+            try {
+                const res = await fetch(`${API_BASE}/stations`);
+                const stations = await res.json();
+                
+                const fromSelect = document.getElementById('fromStation');
+                const toSelect = document.getElementById('toStation');
+ 
+                stations.forEach(st => {
+                    fromSelect.innerHTML += `<option value="${st.name}">${st.name}</option>`;
+                    toSelect.innerHTML += `<option value="${st.name}">${st.name}</option>`;
+                });
+            } catch (err) {
+                console.error('Error loading stations:', err);
+            }
+        }
+ 
+        document.getElementById('searchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+ 
+            const payload = {
+                from: document.getElementById('fromStation').value,
+                to: document.getElementById('toStation').value,
+                trainType: document.getElementById('trainType').value,
+                directOnly: document.getElementById('directOnly').checked
+            };
+ 
+            try {
+                const res = await fetch(`${API_BASE}/search`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+ 
+                if (data.success) {
+                    renderResults(data.results);
+                }
+            } catch (err) {
+                alert('Server ချိတ်ဆက်မှု အဆင်မပြေပါ။ Backend URL မှန်ရဲ့လား စစ်ဆေးပါ။');
+                console.error(err);
+            }
+        });
+ 
+        function renderResults(results) {
+            const section = document.getElementById('resultSection');
+            const list = document.getElementById('resultList');
+            list.innerHTML = '';
+            section.classList.remove('hidden');
+ 
+            if (results.length === 0) {
+                list.innerHTML = `<p class="text-slate-400 bg-slate-800 p-4 rounded-xl shadow border border-slate-700">ဒီခရီးစဉ်အတွက် ရလဒ်မရှိပါ။</p>`;
+                return;
+            }
+ 
+            results.forEach(item => {
+                list.innerHTML += `
+                    <div class="bg-slate-800/90 backdrop-blur-md p-5 rounded-2xl shadow-md border border-slate-700 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <span class="font-bold text-lg text-red-400">${item.train}</span>
+                                <span class="text-xs bg-slate-700 px-2 py-0.5 rounded text-slate-300">${item.type}</span>
+                                ${item.badge ? `<span class="text-xs bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-semibold">${item.badge}</span>` : ''}
+                            </div>
+                            <p class="text-sm text-slate-300 mt-1">ထွက်ချိန်: <b>${item.departure}</b> ➔ ရောက်ချိန်: <b>${item.arrival}</b> (${item.duration})</p>
+                            <p class="text-xs text-slate-400 mt-0.5">${item.direct ? '✨ တိုက်ရိုက်ရထား' : '🔄 လမ်းပြောင်းရနိုင်သည်'}</p>
+                        </div>
+                        <div class="flex items-center space-x-4 w-full md:w-auto justify-between md:justify-end">
+                            <div class="text-right">
+                                <span class="text-xs text-slate-400 block">စတင်ဈေးနှုန်း</span>
+                                <span class="text-xl font-black text-red-400">€${item.price.toFixed(2)}</span>
+                            </div>
+                            <a href="${item.bookingUrl}" target="_blank" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition shadow-md shadow-red-900/50">
+                                သွားဝယ်ရန် 🎟️
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+ 
+        loadStations();
+    </script>
+</body>
+</html>
